@@ -28,7 +28,7 @@ void loop() {
     digitalWrite(ledVerde, LOW);
     }
 
-    else if (distancia > 100){
+    else if (distancia > 50){
       digitalWrite(ledAmarelo, HIGH);
       delay(200);
       digitalWrite(ledAmarelo, LOW);

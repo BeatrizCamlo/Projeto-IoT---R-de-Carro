@@ -1,6 +1,6 @@
 ***Projeto Ré de Carro***
 
-O sistema de ré de um carro é responsável por identificar objetos atrás do carro e sinalizar ao montorista o qunato mais ele pode se aproximar sem causar danos ao carro e similarmente aos onjetos próximos.
+O sistema de ré de um carro é responsável por identificar objetos atrás do carro e sinalizar ao montorista o qunato mais ele pode se aproximar sem causar danos ao carro e similarmente aos objetos próximos.
 
 O projeto é composto por:
 - 1 Arduino Uno;

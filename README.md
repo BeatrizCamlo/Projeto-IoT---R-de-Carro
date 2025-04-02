@@ -9,4 +9,5 @@ O projeto é composto por:
 - Display.
 
 **Funcionamento do Projeto**  
+
 O sensor ultrassonico é responsável por identifiar a distância

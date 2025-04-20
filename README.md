@@ -7,7 +7,7 @@ O projeto é composto por:
 - 3 Leds (Verde, Amarelo, Vermelho);
 - 1 Sensor Ultrassônico;
 - 1 Buzzer
-- 1 Display.
+- 1 Display LCD 16x2.
 
 **Funcionamento do Projeto**  
 

@@ -33,8 +33,6 @@ void loop() {
 
   display.setCursor(0,0); 
   display.print("PROJETO IOT"); 
-  display.setCursor(0, 1); 
-  display.print("TESTES COM LCD");  
   delay(2000);  
   display.clear(); 
   delay(500);

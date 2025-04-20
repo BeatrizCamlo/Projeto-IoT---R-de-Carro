@@ -31,29 +31,6 @@ void loop() {
   long tempo = pulseIn(echoPin, HIGH);
   float distancia = (tempo * 0.0343) / 2;
 
-  if(distancia > 300){
-    digitalWrite(ledVerde, HIGH);
-    delay(300);
-    digitalWrite(ledVerde, LOW);
-    }
-
-    else if (distancia > 100){
-      digitalWrite(ledAmarelo, HIGH);
-      delay(200);
-      digitalWrite(ledAmarelo, LOW);
-    
-      } else{
-          digitalWrite(buzzer, HIGH);
-          digitalWrite(ledVermelho, HIGH);
-          delay(100);
-          digitalWrite(ledVermelho, LOW);
-          digitalWrite(buzzer, LOW);
-        }
-
-  Serial.print("Distância: ");
-  Serial.print(distancia);
-  Serial.print(" cm\n");
-
   display.setCursor(0,0); 
   display.print("PROJETO IOT"); 
   display.setCursor(0, 1); 
@@ -61,4 +38,40 @@ void loop() {
   delay(2000);  
   display.clear(); 
   delay(500);
+
+  if(distancia > 300){
+    digitalWrite(ledVerde, HIGH);
+    delay(300);
+    digitalWrite(ledVerde, LOW);
+    
+    display.setCursor(0,0); 
+    display.print("SEGURO"); 
+    }
+
+    else if (distancia > 100){
+      digitalWrite(ledAmarelo, HIGH);
+      delay(200);
+      digitalWrite(ledAmarelo, LOW);
+
+      display.setCursor(0,0); 
+      display.print("ARRISCADO."); 
+      display.setCursor(0, 1); 
+      display.print("ATENCAO!");
+
+      } else{
+          digitalWrite(buzzer, HIGH);
+          digitalWrite(ledVermelho, HIGH);
+          delay(100);
+          digitalWrite(ledVermelho, LOW);
+          digitalWrite(buzzer, LOW);
+
+          display.setCursor(0,0); 
+          display.print("PARE!"); 
+        }
+
+  Serial.print("Distância: ");
+  Serial.print(distancia);
+  Serial.print(" cm\n");
+
+  delay(1000);
 }

@@ -37,7 +37,7 @@ void loop() {
   display.clear(); 
   delay(500);
 
-  if(distancia > 300){
+  if(distancia > 150){
     digitalWrite(ledVerde, HIGH);
     delay(300);
     digitalWrite(ledVerde, LOW);
@@ -46,7 +46,7 @@ void loop() {
     display.print("SEGURO"); 
     }
 
-    else if (distancia > 100){
+    else if (distancia > 50){
       digitalWrite(ledAmarelo, HIGH);
       delay(200);
       digitalWrite(ledAmarelo, LOW);

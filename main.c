@@ -33,43 +33,44 @@ void loop() {
 
   display.setCursor(0,0); 
   display.print("PROJETO IOT"); 
+  display.setCursor(0, 1); 
   delay(2000);  
   display.clear(); 
   delay(500);
 
-  if(distancia > 150){
+  if(distancia > 100){
     digitalWrite(ledVerde, HIGH);
-    delay(300);
-    digitalWrite(ledVerde, LOW);
-    
     display.setCursor(0,0); 
-    display.print("SEGURO"); 
+    display.print("DISTANCIA SEGURA");
+    delay(2000);
+    display.clear();
+    digitalWrite(ledVerde, LOW);  
     }
 
     else if (distancia > 50){
       digitalWrite(ledAmarelo, HIGH);
-      delay(200);
-      digitalWrite(ledAmarelo, LOW);
-
       display.setCursor(0,0); 
-      display.print("ARRISCADO."); 
+      display.print("DISTANCIA ARRISCADA."); 
       display.setCursor(0, 1); 
       display.print("ATENCAO!");
+      delay(2000);
+      display.clear();
+      digitalWrite(ledAmarelo, LOW); 
 
       } else{
           digitalWrite(buzzer, HIGH);
           digitalWrite(ledVermelho, HIGH);
-          delay(100);
-          digitalWrite(ledVermelho, LOW);
-          digitalWrite(buzzer, LOW);
-
           display.setCursor(0,0); 
-          display.print("PARE!"); 
+          display.print("PARE!");
+          delay(2000);
+          display.clear();
+          digitalWrite(ledVermelho, LOW);
+          digitalWrite(buzzer, LOW);  
         }
 
   Serial.print("Distância: ");
   Serial.print(distancia);
   Serial.print(" cm\n");
 
-  delay(1000);
+  delay(2000);
 }

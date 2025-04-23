@@ -72,5 +72,5 @@ void loop() {
   Serial.print(distancia);
   Serial.print(" cm\n");
 
-  delay(2000);
+  delay(1000);
 }

@@ -41,7 +41,7 @@ void loop() {
   if(distancia > 100){
     digitalWrite(ledVerde, HIGH);
     display.setCursor(0,0); 
-    display.print("DISTANCIA SEGURA");
+    display.print("DISTANCIA SEGURA.");
     delay(2000);
     display.clear();
     digitalWrite(ledVerde, LOW);  
@@ -62,7 +62,7 @@ void loop() {
           digitalWrite(ledVermelho, HIGH);
           display.setCursor(0,0); 
           display.print("PARE!");
-          delay(2000);
+          delay(2000);a
           display.clear();
           digitalWrite(ledVermelho, LOW);
           digitalWrite(buzzer, LOW);  

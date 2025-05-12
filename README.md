@@ -1,4 +1,4 @@
-***Projeto Ré de Carro***
+***Projeto Ré Automotivo***
 
 O sistema de ré de um carro é responsável por identificar objetos atrás do carro e sinalizar ao montorista o qunato mais ele pode se aproximar sem causar danos ao carro e similarmente aos objetos próximos.
 

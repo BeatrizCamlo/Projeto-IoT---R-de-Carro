@@ -21,7 +21,7 @@ O sensor ultrassonico é responsável por identifiar a distância e definir o co
 
 Para complementar as funcionalidades do Sensor de Ré Automotivo, serão adicionados:
 
-- 1 Raspberry;
+- 1 Raspberry (Substituindo o Arduino Uno);
 - Integração com API GPS;
 - Integração com API de informações sobre o tempo;
 - Processamento e publicação de imagens;

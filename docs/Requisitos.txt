@@ -1,0 +1,21 @@
+*** REQUISITOS FUNCIONAIS ***
+
+RF01	O sistema deve medir a distância de obstáculos traseiros
+RF02	O sistema deve exibir alertas visuais (LEDs)
+RF03	O sistema deve exibir mensagens no display LCD
+RF04	O sistema deve acionar buzzer em risco intenso
+RF05	O sistema deve capturar imagens ao detectar risco
+RF06	O sistema deve identificar placas automotivas na imagem
+RF07	O sistema deve obter a localização via GPS/API
+RF08	O sistema deve consultar o clima na localização atual
+RF09	O sistema deve enviar dados ao Adafruit IO
+RF10	O sistema deve exibir dados em dashboard online
+
+
+*** REQUISITOS NÂO FUNCIONAIS ***
+
+RNF01	O sistema deve operar em tempo real (atualização dinâmica)
+RNF02	A comunicação com o Adafruit IO deve ser segura (via API key)
+RNF03	O sistema deve ser alimentado por fonte compatível
+RNF04	A interface do dashboard deve ser clara e responsiva
+RNF05	O sistema deve funcionar em ambientes com conexão Wi-Fi

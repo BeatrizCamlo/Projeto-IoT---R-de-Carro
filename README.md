@@ -28,4 +28,3 @@ Para complementar as funcionalidades do Sensor de Ré Automotivo, serão adicion
 - Dashboard em Adafruit.
 
 O projeto consiste na ampliação das funcionalidades de um sistema de Sensor de Ré Automotivo tradicional, transformando-o em uma solução inteligente IoT capaz de fornecer informações em tempo real sobre o ambiente ao redor do veículo. Essa solução será composta por sensores, processamento local com Raspberry Pi, coleta de dados via APIs e publicação em um dashboard online.
->>>>>>> f13a3d4668f3a196c37c431fc551712f07b9adc8

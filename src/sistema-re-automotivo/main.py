@@ -5,6 +5,7 @@ import ujson
 from umqtt.simple import MQTTClient
 import lcd_api
 import i2c_lcd
+from config import ADAFRUIT_AIO_USERNAME, ADAFRUIT_AIO_KEY, ADAFRUIT_AIO_URL
 
 # ==== Configurações Wi-Fi ====
 SSID = "Wokwi-GUEST"
@@ -12,9 +13,7 @@ PASSWORD = ""
 
 # ==== Configurações MQTT (Adafruit IO) ====
 
-ADAFRUIT_IO_KEY = "aio..."     #Senha do adafruit io
-
-FEED = ADAFRUIT_USERNAME + "/feeds/distancia_sensor_re"
+FEED = ADAFRUIT_AIO_USERNAME + "/feeds/distancia_sensor_re"
 
 # ==== Configuração de pinos ====
 
@@ -72,9 +71,9 @@ def medir_distancia():
 
 def conecta_mqtt():
     client_id = "esp32_" + str(utime.ticks_ms())  # gera ID único
-    client = MQTTClient(client_id, ADAFRUIT_IO_URL,
-                        user=ADAFRUIT_USERNAME,
-                        password=ADAFRUIT_IO_KEY,
+    client = MQTTClient(client_id, ADAFRUIT_AIO_URL,
+                        user=ADAFRUIT_AIO_USERNAME,
+                        password=ADAFRUIT_AIO_KEY,
                         keepalive=60)
     client.connect()
     print("Conectado ao Adafruit IO MQTT!")

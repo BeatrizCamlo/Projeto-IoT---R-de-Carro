@@ -3,7 +3,7 @@ import requests
 import time
 
 # Configurações
-NGROK_URL = "https://SEU_NGROK.ngrok-free.app"  # Atualize com seu URL ngrok
+
 
 FEED_NAME = "placa-carro"
 

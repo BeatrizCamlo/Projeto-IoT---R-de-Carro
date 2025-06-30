@@ -6,7 +6,6 @@ from io import BytesIO
 # Configurações
 
 FEED_NAME = "placa-carro"
-NGROK_URL = "https://SEU_NGROK.ngrok-free.app"  # Atualize com seu URL ngrok
 
 def captura_imagem():
     camera = cv2.VideoCapture(0)

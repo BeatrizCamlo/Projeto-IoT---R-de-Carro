@@ -1,2 +1,2 @@
-processamento-imagens/config_placa.py
-sistema-re-automotivo/config_sensor.py
+src/processamento-imagens/config_placa.py
+src/sistema-re-automotivo/config_sensor.py

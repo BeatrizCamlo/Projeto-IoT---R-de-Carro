@@ -1,107 +1,144 @@
 from machine import Pin, I2C, PWM
 import utime
+import network
+import ujson
+from umqtt.simple import MQTTClient
 import lcd_api
 import i2c_lcd
 
-# --- Configuração dos pinos ---
+# ==== Configurações Wi-Fi ====
+SSID = "Wokwi-GUEST"
+PASSWORD = ""
 
-# Ultrassônico
-trig = Pin(27, Pin.OUT)
-echo = Pin(26, Pin.IN)
+# ==== Configurações MQTT (Adafruit IO) ====
+ADAFRUIT_IO_URL = "io.adafruit.com"
+ADAFRUIT_USERNAME = "LunaKarolix"
+ADAFRUIT_IO_KEY = "aio..."     #Senha do adafruit io
+
+FEED = ADAFRUIT_USERNAME + "/feeds/distancia_sensor_re"
+
+# ==== Configuração de pinos ====
+
+# Sensor ultrassônico
+trig = Pin(23, Pin.OUT)
+echo = Pin(22, Pin.IN)
 
 # LEDs
-led_verde = Pin(0, Pin.OUT)
-led_amarelo = Pin(1, Pin.OUT)
+led_verde = Pin(5, Pin.OUT)
+led_amarelo = Pin(4, Pin.OUT)
 led_vermelho = Pin(2, Pin.OUT)
 
-# Buzzer com PWM para controlar som
-buzzer = PWM(Pin(16))
+# Buzzer
+buzzer = PWM(Pin(14))
 
-# I2C para LCD 2004 (pinos 6 = SDA, 7 = SCL)
-i2c = I2C(1, scl=Pin(7), sda=Pin(6), freq=400000)
+# LCD via I2C
+i2c = I2C(0, scl=Pin(25), sda=Pin(26))
+lcd = i2c_lcd.I2cLcd(i2c, 0x27, 2, 16)
 
-# Opcional: escanear I2C para descobrir o endereço do LCD
-# enderecos = i2c.scan()
-# print("Endereços I2C encontrados:", [hex(a) for a in enderecos])
+# ==== Funções ====
 
-# Configure o endereço correto aqui, exemplo 0x27 ou 0x3F
-lcd_addr = 0x27
-lcd = i2c_lcd.I2cLcd(i2c, lcd_addr, 4, 20)
+def conecta_wifi():
+    wlan = network.WLAN(network.STA_IF)
+    wlan.active(True)
+    wlan.connect(SSID, PASSWORD)
+    print("Conectando-se ao Wi-Fi", end="")
+    while not wlan.isconnected():
+        print(".", end="")
+        utime.sleep(0.5)
+    print(" Conectado!")
+    print("IP:", wlan.ifconfig()[0])
 
-# --- Função para medir distância com timeout ---
 def medir_distancia():
-    trig.low()
-    utime.sleep_us(2)
-    trig.high()
+    trig.value(0)
+    utime.sleep_us(200)
+    trig.value(1)
     utime.sleep_us(10)
-    trig.low()
+    trig.value(0)
 
-    timeout = utime.ticks_us() + 1000000  # timeout 1 segundo
+    timeout = utime.ticks_add(utime.ticks_us(), 1000000)  # 1 segundo timeout
 
-    # Espera echo subir
     while echo.value() == 0:
-        if utime.ticks_us() > timeout:
+        if utime.ticks_diff(timeout, utime.ticks_us()) <= 0:
             return -1
+    inicio = utime.ticks_us()
 
-    pulse_start = utime.ticks_us()
-
-    # Espera echo cair
     while echo.value() == 1:
-        if utime.ticks_us() > timeout:
+        if utime.ticks_diff(timeout, utime.ticks_us()) <= 0:
             return -1
+    fim = utime.ticks_us()
 
-    pulse_end = utime.ticks_us()
+    duracao = utime.ticks_diff(fim, inicio)
+    distancia_cm = (duracao / 2) / 29.1
+    return round(distancia_cm, 2)
 
-    duracao = utime.ticks_diff(pulse_end, pulse_start)
-    distancia = (duracao * 0.0343) / 2  # cm
-    return distancia
+def conecta_mqtt():
+    client_id = "esp32_" + str(utime.ticks_ms())  # gera ID único
+    client = MQTTClient(client_id, ADAFRUIT_IO_URL,
+                        user=ADAFRUIT_USERNAME,
+                        password=ADAFRUIT_IO_KEY,
+                        keepalive=60)
+    client.connect()
+    print("Conectado ao Adafruit IO MQTT!")
+    return client
 
-# --- Função para buzzer tocar ---
-def buzzer_tocar(frequencia=1000, duracao=500):
-    buzzer.freq(frequencia)
-    buzzer.duty_u16(30000)  # volume
-    utime.sleep_ms(duracao)
-    buzzer.duty_u16(0)
-
-# --- Loop principal ---
-while True:
-    dist = medir_distancia()
+def atualizar_display_e_leds(dist):
     lcd.clear()
-
     if dist == -1:
-        msg = "Erro na medicao"
-        print(msg)
-        lcd.putstr(msg)
-        # Desliga tudo
-        led_vermelho.off()
-        led_amarelo.off()
-        led_verde.off()
-        buzzer.duty_u16(0)
+        lcd.putstr("Erro na leitura")
+        led_verde.value(0)
+        led_amarelo.value(0)
+        led_vermelho.value(0)
+        buzzer.duty(0)
+        return
+
+    lcd.putstr("Dist: {:.1f} cm".format(dist))
+
+    if dist > 300:
+        lcd.putstr("\nDistancia segura.")
+        led_verde.value(1)
+        led_amarelo.value(0)
+        led_vermelho.value(0)
+        buzzer.duty(0)
+    elif dist > 50:
+        lcd.putstr("\nDist. arriscada!")
+        led_verde.value(0)
+        led_amarelo.value(1)
+        led_vermelho.value(0)
+        buzzer.duty(0)
     else:
-        msg_dist = "Distancia: {:.1f} cm".format(dist)
-        print(msg_dist)
-        lcd.putstr(msg_dist + "\n")
+        lcd.putstr("\nDistancia critica")
+        led_verde.value(0)
+        led_amarelo.value(0)
+        led_vermelho.value(1)
+        buzzer.freq(1000)
+        buzzer.duty(200)
 
-        if dist < 10:
-            led_vermelho.on()
-            led_amarelo.off()
-            led_verde.off()
-            buzzer_tocar(1500, 200)
-            lcd.putstr("PERIGO!     ")
-            print("PERIGO!")
-        elif dist < 30:
-            led_vermelho.off()
-            led_amarelo.on()
-            led_verde.off()
-            buzzer_tocar(1000, 100)
-            lcd.putstr("Atenção     ")
-            print("Atenção")
-        else:
-            led_vermelho.off()
-            led_amarelo.off()
-            led_verde.on()
-            buzzer.duty_u16(0)
-            lcd.putstr("OK          ")
-            print("OK")
+def loop_principal():
+    conecta_wifi()
+    mqtt = conecta_mqtt()
 
-    utime.sleep(0.5)
+    while True:
+        try:
+            dist = medir_distancia()
+            print("Distância:", dist, "cm")
+            mqtt.publish(FEED, str(dist))
+
+            atualizar_display_e_leds(dist)
+
+            mqtt.ping()          # Mantém conexão viva
+            utime.sleep(2)  # Envia a cada 2 segundos
+
+
+        except OSError as e:
+            print("Erro MQTT, tentando reconectar:", e)
+            try:
+                mqtt.disconnect()
+            except:
+                pass
+            utime.sleep(5)       # Espera um pouco antes de tentar reconectar
+            mqtt = conecta_mqtt()  # Reconnect
+
+try:
+    loop_principal()
+except Exception as e:
+    print("Erro fatal:", e)

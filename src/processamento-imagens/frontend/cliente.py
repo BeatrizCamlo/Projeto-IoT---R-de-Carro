@@ -2,13 +2,10 @@ import time
 import requests
 import cv2
 from io import BytesIO
-
-# Configurações
-
-FEED_NAME = "placa-carro"
+from config import ADAFRUIT_AIO_USERNAME, ADAFRUIT_AIO_KEY, NGROK_URL, FEED_NAME
 
 def captura_imagem():
-    camera = cv2.VideoCapture(0)
+    camera = cv2.VideoCapture(0)  # Usa a webcam local
     ret, frame = camera.read()
     camera.release()
     if not ret:
@@ -32,9 +29,9 @@ def obter_placa(imagem_bytes):
         return "ERRO"
 
 def enviar_para_adafruit_io(valor):
-    url = f
+    url = f"https://io.adafruit.com/api/v2/{ADAFRUIT_AIO_USERNAME}/feeds/{FEED_NAME}/data"
     headers = {
-        "X-AIO-Key": key
+        "X-AIO-Key": ADAFRUIT_AIO_KEY,
         "Content-Type": "application/json"
     }
     data = '{"value": "' + valor + '"}'
@@ -53,7 +50,8 @@ def main():
 
         placa = obter_placa(imagem)
         print("Placa detectada:", placa)
-        enviar_para_adafruit_io(placa)
+        if placa != "ERRO" and placa != "Placa não detectada":
+            enviar_para_adafruit_io(placa)
 
         time.sleep(10)  # espera 10 segundos até a próxima captura
 

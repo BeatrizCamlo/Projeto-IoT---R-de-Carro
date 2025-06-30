@@ -1,11 +1,7 @@
 import cv2
 import requests
 import time
-
-# Configurações
-
-
-FEED_NAME = "placa-carro"
+from config import ADAFRUIT_AIO_USERNAME, ADAFRUIT_AIO_KEY, NGROK_URL, FEED_NAME
 
 def captura_frame_rtsp(rtsp_url):
     cap = cv2.VideoCapture(rtsp_url)
@@ -33,9 +29,9 @@ def enviar_frame_para_servidor(frame):
         return None
 
 def enviar_para_adafruit_io(valor):
-    url = f
+    url = f"https://io.adafruit.com/api/v2/{ADAFRUIT_AIO_USERNAME}/feeds/{FEED_NAME}/data"
     headers = {
-        "X-AIO-Key": //key ,
+        "X-AIO-Key": ADAFRUIT_AIO_KEY,
         "Content-Type": "application/json"
     }
     data = '{"value": "' + valor + '"}'
@@ -46,7 +42,7 @@ def enviar_para_adafruit_io(valor):
         print("Erro no Adafruit IO:", e)
 
 def main():
-    rtsp_url = "rtsp://USUARIO:SENHA@IP_DA_CAMERA:PORTA/caminho"  # Substitua com seu RTSP
+    rtsp_url = "rtsp://USUARIO:SENHA@IP_DA_CAMERA:PORTA/caminho"  # Substitua com sua URL RTSP
     while True:
         frame = captura_frame_rtsp(rtsp_url)
         if frame is not None:
@@ -63,7 +59,7 @@ def main():
         else:
             print("Frame inválido, tentando novamente...")
 
-        time.sleep(5)  # aguarda 5 segundos antes da próxima captura
+        time.sleep(5)
 
 if __name__ == "__main__":
     main()

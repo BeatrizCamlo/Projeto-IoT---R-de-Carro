@@ -33,7 +33,7 @@ def enviar_frame_para_servidor(frame):
         return None
 
 def enviar_para_adafruit_io(valor):
-    url = f"https://io.adafruit.com/api/v2/{ADAFRUIT_AIO_USERNAME}/feeds/{FEED_NAME}/data"
+    url = f
     headers = {
         "X-AIO-Key": ADAFRUIT_AIO_KEY,
         "Content-Type": "application/json"

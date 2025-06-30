@@ -2,7 +2,7 @@ import time
 import requests
 import cv2
 from io import BytesIO
-from config import ADAFRUIT_AIO_USERNAME, ADAFRUIT_AIO_KEY, NGROK_URL, FEED_NAME
+from config_placa import ADAFRUIT_AIO_USERNAME, ADAFRUIT_AIO_KEY, NGROK_URL, FEED_NAME
 
 def captura_imagem():
     camera = cv2.VideoCapture(0)  # Usa a webcam local

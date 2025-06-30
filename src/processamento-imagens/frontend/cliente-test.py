@@ -1,7 +1,7 @@
 import cv2
 import requests
 import time
-from config import ADAFRUIT_AIO_USERNAME, ADAFRUIT_AIO_KEY, NGROK_URL, FEED_NAME
+from config_placa import ADAFRUIT_AIO_USERNAME, ADAFRUIT_AIO_KEY, NGROK_URL, FEED_NAME
 
 def captura_frame_rtsp(rtsp_url):
     cap = cv2.VideoCapture(rtsp_url)

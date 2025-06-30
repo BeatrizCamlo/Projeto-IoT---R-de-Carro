@@ -5,7 +5,7 @@ import ujson
 from umqtt.simple import MQTTClient
 import lcd_api
 import i2c_lcd
-from config.py import ADAFRUIT_AIO_USERNAME, ADAFRUIT_AIO_KEY, ADAFRUIT_AIO_URL, FEED_NAME
+from config_sensor import ADAFRUIT_AIO_USERNAME, ADAFRUIT_AIO_KEY, ADAFRUIT_AIO_URL, FEED_NAME
 
 # ==== Configurações Wi-Fi ====
 SSID = "Wokwi-GUEST"

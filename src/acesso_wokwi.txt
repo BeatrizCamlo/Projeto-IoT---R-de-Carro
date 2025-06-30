@@ -1,1 +1,2 @@
-https://wokwi.com/projects/433495204473013249
+https://wokwi.com/projects/433495204473013249    (esse com Raspberry pi pico sem conexão com adafruit io)
+https://wokwi.com/projects/435143379295947777   (Com ESP32 MicroPython e conexão com o adafruit io)

@@ -4,8 +4,7 @@ import time
 
 # Configurações
 NGROK_URL = "https://SEU_NGROK.ngrok-free.app"  # Atualize com seu URL ngrok
-ADAFRUIT_AIO_USERNAME = "BeatrizCamilo"
-ADAFRUIT_AIO_KEY = "aio_Tqvm06cbudGTJ9OqX57mliVtFrtP"
+
 FEED_NAME = "placa-carro"
 
 def captura_frame_rtsp(rtsp_url):

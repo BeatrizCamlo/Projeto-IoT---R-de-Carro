@@ -11,8 +11,7 @@ SSID = "Wokwi-GUEST"
 PASSWORD = ""
 
 # ==== Configurações MQTT (Adafruit IO) ====
-ADAFRUIT_IO_URL = "io.adafruit.com"
-ADAFRUIT_USERNAME = "LunaKarolix"
+
 ADAFRUIT_IO_KEY = "aio..."     #Senha do adafruit io
 
 FEED = ADAFRUIT_USERNAME + "/feeds/distancia_sensor_re"

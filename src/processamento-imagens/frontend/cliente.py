@@ -4,8 +4,7 @@ import cv2
 from io import BytesIO
 
 # Configurações
-ADAFRUIT_AIO_USERNAME = "BeatrizCamilo"
-ADAFRUIT_AIO_KEY = "aio_Tqvm06cbudGTJ9OqX57mliVtFrtP"
+
 FEED_NAME = "placa-carro"
 NGROK_URL = "https://SEU_NGROK.ngrok-free.app"  # Atualize com seu URL ngrok
 

@@ -35,7 +35,7 @@ def enviar_frame_para_servidor(frame):
 def enviar_para_adafruit_io(valor):
     url = f
     headers = {
-        "X-AIO-Key": ADAFRUIT_AIO_KEY,
+        "X-AIO-Key": ,
         "Content-Type": "application/json"
     }
     data = '{"value": "' + valor + '"}'
